@@ -1,0 +1,73 @@
+@page
+@model RazorSample.Pages.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form>
+    <p>
+        Role: 
+        <select asp-for="UserRole" asp-items="Model.UserIndexVM.Roles">
+            <option value="">All</option>
+        </select>
+        Title: 
+        <input type="text" name="searchString"  asp-for="SearchString"/>
+        <input type="submit" value="Filter"/>
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserIndexVM.Users[0].Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserIndexVM.Users[0].Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserIndexVM.Users[0].Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.UserIndexVM.Users) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.UserId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.UserId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.UserId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.UserIndexVM.Users.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.UserIndexVM.Users.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.UserIndexVM.Users.PageIndex - 1)" 
+        class="btn btn-default @preDisabled">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.UserIndexVM.Users.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled">Next</a>
+</div>

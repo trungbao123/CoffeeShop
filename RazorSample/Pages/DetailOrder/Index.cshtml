@@ -1,0 +1,76 @@
+@page
+@model RazorSample.Pages.DetailOrders.IndexModel
+
+@{
+    ViewData["Title"] = "ManagerOrder";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-page="/Order">Create New</a>
+</p>
+<form>
+    <p>
+        Genre: 
+        <select asp-for="MenuName" asp-items="Model.DetailOrderIndexVm.GetMenuNames">
+            <option value="">All</option>
+        </select>
+    </p>
+    <input type="submit" value="Filter"/>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailOrderIndexVm.DetailOrders[0].MenuName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailOrderIndexVm.DetailOrders[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailOrderIndexVm.DetailOrders[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailOrderIndexVm.DetailOrders[0].Total)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DetailOrderIndexVm.DetailOrders) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MenuName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+     <!--       <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td> -->
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.DetailOrderIndexVm.DetailOrders.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.DetailOrderIndexVm.DetailOrders.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.DetailOrderIndexVm.DetailOrders.PageIndex - 1)" 
+        class="btn btn-default @preDisabled">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.DetailOrderIndexVm.DetailOrders.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled">Next</a>
+</div>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ApplicationCore": {
+      "commandName": "Project",
+      "sqlDebugging": true
+    }
+  }
+}

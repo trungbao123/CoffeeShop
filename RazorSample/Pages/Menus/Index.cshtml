@@ -1,0 +1,78 @@
+@page
+@model RazorSample.Pages.Menus.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form>
+    <p>
+        Genre: 
+        <select asp-for="MenuGenre" asp-items="Model.MenuIndexVM.Genres">
+            <option value="">All</option>
+        </select>
+        Search: 
+        <input type="text" name="searchString"  asp-for="SearchString"/>
+        <input type="submit" value="Filter"/>
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuIndexVM.Menus[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuIndexVM.Menus[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuIndexVM.Menus[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuIndexVM.Menus[0].Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.MenuIndexVM.Menus) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.MenuId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.MenuId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.MenuId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.MenuIndexVM.Menus.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.MenuIndexVM.Menus.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.MenuIndexVM.Menus.PageIndex - 1)" 
+        class="btn btn-default @preDisabled">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.MenuIndexVM.Menus.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled">Next</a>
+</div>

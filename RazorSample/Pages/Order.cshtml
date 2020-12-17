@@ -1,0 +1,143 @@
+﻿@page
+@model OrderModel
+@{
+    ViewData["Title"] = "Order";
+    ViewData["Session"]="null";
+}
+    <link rel="stylesheet" href="~/lib/t/css/linearicons.css"/>
+	<link rel="stylesheet" href="~/lib/t/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="~/lib/t/css/bootstrap.css"/>
+	<link rel="stylesheet" href="~/lib/t/css/magnific-popup.css"/>
+	<link rel="stylesheet" href="~/lib/t/css/nice-select.css"/>
+	<link rel="stylesheet" href="~/lib/t/css/animate.min.css"/>
+	<link rel="stylesheet" href="~/lib/t/css/owl.carousel.css"/>
+	<link rel="stylesheet" href="~/lib/t/css/main.css"/>
+<h1>@ViewData["Title"]</h1>
+<form>
+    <p>
+        <div>
+             Genre: 
+        <select asp-for="MenuGenre" asp-items="Model.MenuIndexVM.Genres">
+            <option value="">All</option>
+        </select>
+        </div>
+        <div>
+        Search: 
+        <input type="text" name="searchString"  asp-for="SearchString"/>
+        <input type="submit" value="Filter"/>
+        </div>
+        
+    </p>
+</form>
+@{
+    var preDisabled = !Model.MenuIndexVM.Menus.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.MenuIndexVM.Menus.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Order" 
+        asp-route-pageIndex="@(Model.MenuIndexVM.Menus.PageIndex - 1)" 
+        class="btn btn-default @preDisabled">Previous</a>
+
+    <a  asp-page="Order" 
+        asp-route-pageIndex="@(Model.MenuIndexVM.Menus.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled">Next</a>
+</div>
+@Model.ODerId
+<div class="container">
+    <div >
+        <div class="row">
+            <div class="col-lg-9 col-lg-push-3 col-md-8 col-md-push-4 text-page">
+                <header class="woocommerce-products-header"></header>
+                  
+                        <section id="coffee">
+		                    <div class="container">
+			                    <div class="row">
+                                     @foreach (var item in Model.MenuIndexVM.Menus)
+                                     {
+				                    <div class="col-lg-4">
+					                    <div class="single-menu">
+						                    <div class="title-div justify-content-between d-flex">
+							                    <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+							                    <p class="price float-right">
+								                    @Html.DisplayFor(modelItem => item.Price)$
+							                    </p>
+						                    </div>
+						                    <p>
+							                    Usage of the Internet is becoming more common due to rapid advance.
+						                    </p>
+                                            <div class="form-group">
+                                                <input asp-for=@Model.quantity class="form-control" />
+                                                 <a asp-page="./DetailOrder/Create" asp-route-price="@item.Price" asp-route-Namemenu="@item.Name" asp-route-idmenu="@item.MenuId" asp-route-quantity=@Model.quantity asp-route-idOrder="@Model.ODerId" >add</a>
+                                             </div>
+					                    </div>
+				                    </div>
+                                    }
+									
+			                    </div>
+		                    </div>
+	                    </section>
+						
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-lg-pull-9 col-md-pull-8">
+                    <div id="content-sidebar" class="content-sidebar woocommerce-sidebar widget-area" role="complementary">
+                        <aside id="woocommerce_widget_cart-3" class="widget woocommerce widget_shopping_cart">
+                            <h3 class="header-widget">Order</h3>
+                            <div class="widget_shopping_cart_content">
+	                    <ul class="woocommerce-mini-cart cart_list product_list_widget ">
+							<li class="woocommerce-mini-cart-item mini_cart_item">
+						       												
+                                <a>
+								Cookie Ice Blended					
+                                </a>
+									<span class="quantity">
+                                        10 × 
+                                        <span class="woocommerce-Price-amount amount">
+                                            <span class="woocommerce-Price-currencySymbol">
+                                                $
+                                            </span>
+                                        2.55
+                                        </span>
+                                         <a  >×</a>	
+                                    </span>					
+                            </li>
+						</ul>
+	<p class="woocommerce-mini-cart__total total">
+        <strong>
+            Subtotal:
+        </strong>
+        <span class="woocommerce-Price-amount amount">
+            <span class="woocommerce-Price-currencySymbol">
+                $
+            </span>
+            25.5
+        </span>
+    </p>
+	<p class="btn btn-danger">
+        <a >
+        Checkout
+        </a>
+    </p>
+</div>
+</aside>
+
+<script src="~/lib/t/js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="~/lib/t/js/vendor/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+	<script src="~/lib/t/js/easing.min.js"></script>
+	<script src="~/lib/t/js/hoverIntent.js"></script>
+	<script src="~/lib/t/js/superfish.min.js"></script>
+	<script src="~/lib/t/js/jquery.ajaxchimp.min.js"></script>
+	<script src="~/lib/t/js/jquery.magnific-popup.min.js"></script>
+	<script src="~/lib/t/js/owl.carousel.min.js"></script>
+	<script src="~/lib/t/js/jquery.sticky.js"></script>
+	<script src="~/lib/t/js/jquery.nice-select.min.js"></script>
+	<script src="~/lib/t/js/parallax.min.js"></script>
+	<script src="~/lib/t/js/waypoints.min.js"></script>
+	<script src="~/lib/t/js/jquery.counterup.min.js"></script>
+	<script src="~/lib/t/js/mail-script.js"></script>
+	<script src="~/lib/t/js/main.js"></script>

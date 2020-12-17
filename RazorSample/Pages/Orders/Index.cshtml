@@ -1,0 +1,70 @@
+@page
+@model RazorSample.Pages.Orders.IndexModel
+
+@{
+    ViewData["Title"] = "ManagerOrder";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form>
+    <p>
+        Genre: 
+        <select asp-for="userName" asp-items="Model.OrderIndexVm.GetUsername">
+            <option value="">All</option>
+        </select>
+    </p>
+    <input type="submit" value="Filter"/>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderIndexVm.Orders[0].UserNv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderIndexVm.Orders[0].NgayLap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderIndexVm.Orders[0].TongTien)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderIndexVm.Orders) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserNv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayLap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TongTien)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.OrderIndexVm.Orders.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.OrderIndexVm.Orders.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.OrderIndexVm.Orders.PageIndex - 1)" 
+        class="btn btn-default @preDisabled">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.OrderIndexVm.Orders.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled">Next</a>
+</div>

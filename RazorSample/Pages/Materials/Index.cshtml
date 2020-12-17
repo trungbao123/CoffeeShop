@@ -1,0 +1,84 @@
+@page
+@model RazorSample.Pages.Materials.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form>
+    <p>
+        Status: 
+        <select asp-for="MaterialStatus" asp-items="Model.MaterialIndexVM.Statuses">
+            <option value="">All</option>
+        </select>
+        Search: 
+        <input type="text" name="searchString"  asp-for="SearchString"/>
+        <input type="submit" value="Filter"/>
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialIndexVM.Materials[0].MaterialName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialIndexVM.Materials[0].Quantity)
+            </th>
+           <th>
+                @Html.DisplayNameFor(model => model.MaterialIndexVM.Materials[0].Unit) 
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialIndexVM.Materials[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaterialIndexVM.Materials[0].ReceiptDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.MaterialIndexVM.Materials) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceiptDate)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.MaterialId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.MaterialId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.MaterialId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var preDisabled = !Model.MaterialIndexVM.Materials.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.MaterialIndexVM.Materials.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.MaterialIndexVM.Materials.PageIndex - 1)" 
+        class="btn btn-default @preDisabled">Previous</a>
+
+    <a  asp-page="Index" 
+        asp-route-pageIndex="@(Model.MaterialIndexVM.Materials.PageIndex + 1)" 
+        class="btn btn-default @nextDisabled">Next</a>
+</div>

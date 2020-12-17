@@ -1,0 +1,50 @@
+@page
+@model RazorSample.Pages.DetailOrders.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Menu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DetailOrder.DetailOrderId" />
+            <div class="form-group">
+                <label asp-for="DetailOrder.MenuName" class="control-label"></label>
+                <input asp-for="DetailOrder.MenuName" class="form-control" />
+                <span asp-validation-for="DetailOrder.MenuName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DetailOrder.Quantity" class="control-label"></label>
+                <input asp-for="DetailOrder.Quantity" class="form-control" />
+                <span asp-validation-for="DetailOrder.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DetailOrder.Price" class="control-label"></label>
+                <input asp-for="DetailOrder.Price" class="form-control" />
+                <span asp-validation-for="DetailOrder.Price" class="text-danger"></span>
+            </div>
+   <!--         <div class="form-group">
+                <label asp-for="DetailOrder.Total" class="control-label"></label>
+                <input asp-for="DetailOrder.Total" class="form-control" />
+                <span asp-validation-for="DetailOrder.Total" class="text-danger"></span>
+            </div> -->
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
